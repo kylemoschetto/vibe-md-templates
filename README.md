@@ -98,7 +98,8 @@ Claude Code will walk you through customizing each template for your project.
 │   ├── security.md     # Security requirements
 │   ├── tests.md        # Testing strategy
 │   ├── sbom.md         # Approved dependencies
-│   └── changelog.md    # Version history
+│   ├── changelog.md    # Version history
+│   └── starter-permissions.json  # Pre-approved commands for Claude Code
 │
 ├── commands/           # Slash commands for Claude Code
 │   ├── setup-statusline.md       # /setup-statusline - Configure context status bar
@@ -135,8 +136,36 @@ Your `.claude/` folder contains markdown files that Claude Code reads for contex
 | `prd.md` | **What you're building** - Features, user stories, requirements |
 | `workflow.md` | **How you work** - Git workflow, PR process, issue tracking with beads |
 | `infra.md` | **Tech decisions** - Stack, architecture, deployment |
+| `starter-permissions.json` | **Safe defaults** - Pre-approved commands Claude can run without asking |
 
 When you start Claude Code, it reads these files and understands your project without you having to explain it.
+
+### Starter Permissions
+
+The `starter-permissions.json` file contains a curated list of commands for Claude Code. Commands are split between auto-approved and "ask first":
+
+**Auto-approved (allow):**
+- **Package managers:** npm, pnpm, bun, pip, cargo, uv, etc.
+- **Git commands:** status, add, commit, push, pull, branch, etc.
+- **File operations:** ls, cat, mkdir, cp, mv, touch, etc.
+- **Development tools:** make, jq, python, node, etc.
+- **GitHub CLI:** gh pr, gh issue, gh repo
+- **Playwright MCP tools:** browser automation for testing
+
+**Ask first (requires confirmation):**
+- **curl** - network requests
+- **rm** - file deletion
+- **docker / docker-compose** - container operations
+- **brew** - system package installation
+- **source** - shell script execution
+
+**To use it:** Copy to your project's `.claude/` folder as `settings.local.json`:
+
+```bash
+cp templates/starter-permissions.json /path/to/your/project/.claude/settings.local.json
+```
+
+> **Note:** Review the permissions before using. Remove any commands you'd prefer Claude to ask about first.
 
 ### Issue Tracking with Beads
 
