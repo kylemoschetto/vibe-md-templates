@@ -38,6 +38,12 @@ Before asking questions about the Markdown templates, confirm or initialize bead
 - If yes: run `bd init` to set up the beads directory and database.
 - Ask if they want to create initial issues for any planned features from the PRD.
 
+Next, offer to set up starter permissions:
+- Check if `.claude/settings.local.json` exists.
+- Ask: "Would you like to set up starter permissions? This pre-approves common safe commands (npm, git, file operations, docker, etc.) so Claude won't ask for permission each time."
+- If yes: Copy `templates/starter-permissions.json` to `.claude/settings.local.json`
+- If `.claude/settings.local.json` already exists, ask if they want to merge or replace the existing permissions.
+
 Then, begin by asking the user a single, high-clarity question for each context file that still contains blanks or placeholders. Proceed file by file in a conversational format. For each question:
 - Use checkboxes or multiple-choice where appropriate.
 - Offer default examples to accelerate answers.
