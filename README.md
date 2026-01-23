@@ -112,8 +112,10 @@ Claude Code will walk you through customizing each template for your project.
 │
 ├── prompts/            # Interactive setup helpers
 │   ├── setup-project.prompt    # Full project setup wizard
+│   └── migrate-project.prompt  # Migrate project setup wizard
 │   ├── create-prd.prompt       # PRD creation helper
 │   └── create-command.prompt   # Custom command creator
+│   └── existing-prd.prompt     # PRD creation helper for existing projects
 │
 ├── docs/               # Detailed guides
 │   └── statusline-guide.md     # Context status line setup and customization
@@ -281,6 +283,10 @@ See the [Beads documentation](https://github.com/steveyegge/beads) for the full 
 - Document endpoints in `prd.md`
 - Emphasize rate limiting and auth in `security.md`
 - Detail scaling requirements in `infra.md`
+
+### For Existing Projects
+- Use `existing-prd.prompt` to create PRDs for existing projects
+- Use `migrate-project.prompt` to migrate projects that were already setup for this template system
 
 ---
 
