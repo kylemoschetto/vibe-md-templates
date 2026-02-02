@@ -1,0 +1,174 @@
+<!--
+SYNC NOTICE: If you modify this prompt, update the README.md sections:
+- "What Claude Will Do" must match the steps here
+- The code block in "One Command Setup" must contain this exact text
+-->
+
+# Bootstrap: Set Up Claude Code Starter Kit
+
+You are setting up this Claude Code Starter Kit for a new project. Follow these steps exactly.
+
+## CRITICAL: Enter Plan Mode First
+
+Before doing ANYTHING else, enter plan mode. The user must see and approve the full plan before any files are created or modified.
+
+In your plan, outline every step you will take, including:
+- Which files will be copied and where
+- What questions you'll ask about their project
+- What the final folder structure will look like
+
+Wait for user approval before proceeding.
+
+---
+
+## Step 1: Copy Starter Permissions (Do This First)
+
+This minimizes permission popups for the rest of setup.
+
+1. Create the `.claude/` folder if it doesn't exist:
+   ```bash
+   mkdir -p .claude
+   ```
+
+2. Copy the starter permissions file:
+   ```bash
+   cp templates/starter-permissions.json .claude/settings.local.json
+   ```
+
+---
+
+## Step 2: Copy All Templates
+
+Copy all template files to the `.claude/` folder:
+
+```bash
+cp templates/claude.md .claude/
+cp templates/prd.md .claude/
+cp templates/workflow.md .claude/
+cp templates/infra.md .claude/
+cp templates/security.md .claude/
+cp templates/sbom.md .claude/
+cp templates/tests.md .claude/
+cp templates/changelog.md .claude/
+```
+
+---
+
+## Step 3: Copy All Slash Commands
+
+Create the commands folder and copy all commands:
+
+```bash
+mkdir -p .claude/commands
+cp commands/*.md .claude/commands/
+```
+
+---
+
+## Step 4: Initialize Beads
+
+Set up lightweight issue tracking:
+
+```bash
+bd quickstart
+```
+
+If beads is not installed, inform the user they need to install it:
+```bash
+npm install -g beads-ts
+```
+
+---
+
+## Step 5: Gather Project Information
+
+Ask the user these questions to customize their templates:
+
+1. **What are you building?**
+   - Get a 1-2 sentence description of the project
+   - Example: "A task management app for remote teams"
+
+2. **Who is it for?**
+   - Target users/audience
+   - Example: "Small development teams (5-20 people)"
+
+3. **What's the tech stack?**
+   - Frontend, backend, database, hosting
+   - Offer common defaults: "React + Node + PostgreSQL? Or something else?"
+
+4. **What are the main features?**
+   - Get 3-5 core features they want to build
+   - These will become beads issues
+
+---
+
+## Step 6: Configure All Templates
+
+Using the answers from Step 5, fill in the placeholders in these files:
+
+### `.claude/prd.md`
+- Project name and description
+- Target users
+- Core features as user stories
+- MVP scope
+
+### `.claude/infra.md`
+- Tech stack details
+- Development environment
+- Deployment target (if known)
+
+### `.claude/workflow.md`
+- Should already be configured, but verify beads integration
+
+### `.claude/security.md`
+- Basic security requirements based on app type
+- If handling user data, note authentication needs
+
+### `.claude/sbom.md`
+- List the core dependencies from their tech stack
+
+---
+
+## Step 7: Offer Status Line Setup
+
+Ask the user:
+
+> "Would you like to set up the context status line? This shows your token usage in real-time and is **highly recommended** by the template author—it significantly improves your Claude Code experience by helping you stay aware of context limits. It's also easy to remove later if you don't want it."
+
+If yes, run `/setup-statusline` or guide them through the setup.
+
+---
+
+## Step 8: Create Initial Beads Issues
+
+Offer to create issues for the features they mentioned:
+
+> "Would you like me to create beads issues for your main features? This helps track your work from the start."
+
+If yes, create issues like:
+```bash
+bd create "Feature name from their list" --type feature
+```
+
+Create one issue per major feature they mentioned.
+
+---
+
+## Completion Checklist
+
+Before finishing, verify:
+
+- [ ] `.claude/` folder exists with all template files
+- [ ] `.claude/commands/` folder exists with all command files
+- [ ] `.claude/settings.local.json` exists (starter permissions)
+- [ ] `.beads/` folder exists (from `bd quickstart`)
+- [ ] Templates have been customized with project info
+- [ ] User has been offered status line setup
+
+Then tell the user:
+
+> "Your Claude Code Starter Kit is ready! Here's what you can do next:
+> - Run `/gogogo` to start a coding session
+> - Run `/story` to add more features to your PRD
+> - Run `bd ready` to see issues ready to work on
+> - Check `.claude/` to review your context files"

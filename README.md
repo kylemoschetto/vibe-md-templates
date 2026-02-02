@@ -1,89 +1,254 @@
 # Claude Code Starter Kit
 
-**Get productive with Claude Code in minutes.** This starter kit gives you ready-to-use templates that help Claude Code understand your project and work more effectively.
+## For Humans: What This Is
 
-## What This Does
+This starter kit gives Claude Code everything it needs to understand your project. Instead of explaining your codebase every session, you set up context files once and Claude remembers how you work, what you're building, and what standards to follow.
 
-When you use Claude Code, it works best when it understands your project's context—what you're building, how you want to work, and what standards to follow. This kit provides:
-
-- **Templates** that teach Claude Code about your project
-- **Slash commands** for common workflows (start session, wrap up, create stories)
-- **Issue tracking** via [Beads](https://github.com/steveyegge/beads) to manage work items
-
-**Before:** You explain your project context every session.
-**After:** Claude Code reads your templates and already knows how to help.
+**The kit includes:** Ready-to-use templates for your project docs, slash commands for common workflows, issue tracking via Beads, and pre-approved permissions so Claude doesn't ask about safe commands.
 
 ---
 
-## Quick Start
+## One Command Setup
 
-### Step 1: Install the Tools
-
-**Claude Code** (pick one method):
+**Prerequisites:** Install Claude Code and Beads first:
 
 ```bash
-# Option A: Native binary (recommended)
+# Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
 
-# Option B: npm
-npm install -g @anthropic-ai/claude-code
-```
-
-**Beads** (issue tracking):
-
-```bash
+# Beads (issue tracking)
 npm install -g beads-ts
 ```
 
-Verify both are installed:
+**Then clone this repo and run the setup:**
 
 ```bash
-claude --version
-bd --version
+git clone https://github.com/kylemoschetto/vibe-md-templates.git
+cd vibe-md-templates
+claude
 ```
 
-### Step 1.5: Set Up Context Status Line (Recommended)
+**Once Claude Code opens, paste this:**
 
-This one-time setup adds a persistent status bar showing your token usage. It helps you stay aware of context limits before autocompact triggers—essential for longer sessions.
-
-```bash
-# In Claude Code, run:
-/setup-statusline
 ```
+# Bootstrap: Set Up Claude Code Starter Kit
 
-Then restart Claude Code. You'll see a status bar at the bottom of your terminal. See [docs/statusline-guide.md](docs/statusline-guide.md) for details.
+You are setting up this Claude Code Starter Kit for a new project. Follow these steps exactly.
 
-> **Tip:** If you skip this step, the `/gogogo` command will offer to set it up for you later.
+## CRITICAL: Enter Plan Mode First
 
-### Step 2: Set Up Your Project
+Before doing ANYTHING else, enter plan mode. The user must see and approve the full plan before any files are created or modified.
 
-```bash
-# 1. Create a .claude folder in your project
-mkdir -p /path/to/your/project/.claude
+In your plan, outline every step you will take, including:
+- Which files will be copied and where
+- What questions you'll ask about their project
+- What the final folder structure will look like
 
-# 2. Copy the templates
-cp templates/*.md /path/to/your/project/.claude/
+Wait for user approval before proceeding.
 
-# 3. Initialize beads for issue tracking
-cd /path/to/your/project
+---
+
+## Step 1: Copy Starter Permissions (Do This First)
+
+This minimizes permission popups for the rest of setup.
+
+1. Create the `.claude/` folder if it doesn't exist:
+   mkdir -p .claude
+
+2. Copy the starter permissions file:
+   cp templates/starter-permissions.json .claude/settings.local.json
+
+---
+
+## Step 2: Copy All Templates
+
+Copy all template files to the `.claude/` folder:
+cp templates/claude.md .claude/
+cp templates/prd.md .claude/
+cp templates/workflow.md .claude/
+cp templates/infra.md .claude/
+cp templates/security.md .claude/
+cp templates/sbom.md .claude/
+cp templates/tests.md .claude/
+cp templates/changelog.md .claude/
+
+---
+
+## Step 3: Copy All Slash Commands
+
+Create the commands folder and copy all commands:
+mkdir -p .claude/commands
+cp commands/*.md .claude/commands/
+
+---
+
+## Step 4: Initialize Beads
+
+Set up lightweight issue tracking:
 bd quickstart
 
-# 4. (Optional) Set up Claude Code hooks for automatic context
-bd setup claude
+If beads is not installed, inform the user they need to install it:
+npm install -g beads-ts
+
+---
+
+## Step 5: Gather Project Information
+
+Ask the user these questions to customize their templates:
+
+1. **What are you building?**
+   - Get a 1-2 sentence description of the project
+
+2. **Who is it for?**
+   - Target users/audience
+
+3. **What's the tech stack?**
+   - Frontend, backend, database, hosting
+
+4. **What are the main features?**
+   - Get 3-5 core features they want to build
+
+---
+
+## Step 6: Configure All Templates
+
+Using the answers from Step 5, fill in the placeholders in all template files.
+
+---
+
+## Step 7: Offer Status Line Setup
+
+Ask the user:
+"Would you like to set up the context status line? This shows your token usage in real-time and is highly recommended by the template author—it significantly improves your Claude Code experience. Easy to remove later if you don't want it."
+
+---
+
+## Step 8: Create Initial Beads Issues
+
+Offer to create issues for the features they mentioned.
+
+---
+
+## Completion
+
+Verify all files are in place, then tell the user they're ready to go.
 ```
 
-### Step 3: Customize Your Templates
+That's it. Claude will show you a plan, then set everything up.
 
-Open Claude Code in your project and paste the setup prompt:
+---
 
-```bash
-cd /path/to/your/project
-claude
+## What Claude Will Do
 
-# Then paste the contents of prompts/setup-project.prompt
+When you run the setup command, Claude will:
+
+1. **Enter plan mode** — You'll see exactly what will happen before anything changes
+2. **Copy starter permissions** — Pre-approves safe commands (npm, git, etc.) so you get fewer popups
+3. **Create your `.claude/` folder** — Where all context files live
+4. **Copy template files** — PRD, workflow, security, infrastructure docs
+5. **Copy slash commands** — `/gogogo`, `/wrapup`, `/story`, and more
+6. **Initialize Beads** — Sets up lightweight issue tracking
+7. **Ask about your project** — What you're building, tech stack, main features
+8. **Fill in your templates** — Customizes all docs based on your answers
+9. **Offer status line setup** — Real-time token usage display (recommended)
+10. **Create initial issues** — Optionally creates Beads issues for your features
+
+You approve the plan before any files are created.
+
+---
+
+## Already Have a Claude Code Project?
+
+If you're already using Claude Code and want to add this workflow:
+
+```
+# Convert Existing Project to Claude Code Starter Kit
+
+You are adding the Claude Code Starter Kit to an existing project that already has some Claude Code configuration. Your job is to carefully merge the new templates without disrupting the user's existing setup.
+
+## CRITICAL: Enter Plan Mode First
+
+Before doing ANYTHING else, enter plan mode. This is essential for existing projects because we need to show the user exactly what will change.
+
+Your plan must include:
+- What already exists in their .claude/ folder
+- What will be ADDED (files that don't exist yet)
+- What COULD be updated (files that exist but differ from templates)
+- How permissions will be merged (not replaced)
+
+Wait for user approval before proceeding.
+
+---
+
+## Step 1: Audit Existing Setup
+
+Check what already exists:
+- .claude/ folder contents
+- .claude/settings.local.json (existing permissions)
+- .beads/ folder (issue tracking)
+- .claude/commands/ folder
+
+---
+
+## Step 2: Categorize Files
+
+Categorize every file as ADD, DIFFER, or MATCH.
+
+---
+
+## Step 3: Handle Existing Files Carefully
+
+For each file that exists and differs, ask the user to choose:
+1. Keep existing
+2. Replace with template
+3. Show me the diff
+
+---
+
+## Step 4: Merge Permissions Intelligently
+
+Keep ALL existing permissions. Add new ones from starter kit. Show what will be added.
+
+---
+
+## Step 5: Add New Files
+
+Copy files that don't exist yet.
+
+---
+
+## Step 6: Initialize Beads (If Needed)
+
+If .beads/ doesn't exist, offer to run bd quickstart
+
+---
+
+## Step 7: Fill Placeholder Content
+
+For newly added template files, fill in placeholders.
+
+---
+
+## Step 8: Offer Status Line Setup
+
+Recommend the context status line for real-time token usage.
+
+---
+
+## Key Principles
+
+1. Never silently overwrite—always show what will change
+2. Preserve user customizations—their existing config takes priority
+3. Merge, don't replace—especially for permissions
 ```
 
-Claude Code will walk you through customizing each template for your project.
+This will audit your existing setup and carefully merge in the new templates without disrupting your current configuration. You'll see exactly what will change and approve each modification.
+
+---
+
+# Reference Documentation
+
+Everything below is detailed reference material. You don't need to read it to get started—just run the setup command above.
 
 ---
 
@@ -102,21 +267,26 @@ Claude Code will walk you through customizing each template for your project.
 │   └── starter-permissions.json  # Pre-approved commands for Claude Code
 │
 ├── commands/           # Slash commands for Claude Code
-│   ├── setup-statusline.md       # /setup-statusline - Configure context status bar
-│   ├── gogogo.md                 # /gogogo - Start a work session
-│   ├── wrapup.md                 # /wrapup - End session, commit, sync
-│   ├── story.md                  # /story - Create a new user story
-│   ├── create-prompt.md          # /create-prompt - Build effective prompts
+│   ├── bootstrap.md             # /bootstrap - Set up new project
+│   ├── convert.md               # /convert - Add to existing project
+│   ├── setup-statusline.md      # /setup-statusline - Configure context status bar
+│   ├── gogogo.md                # /gogogo - Start a work session
+│   ├── wrapup.md                # /wrapup - End session, commit, sync
+│   ├── story.md                 # /story - Create a new user story
+│   ├── create-prompt.md         # /create-prompt - Build effective prompts
 │   ├── create-research-prompt.md # /create-research-prompt - Build deep research prompts
-│   └── improve-prompt.md         # /improve-prompt - Fix and enhance existing prompts
+│   └── improve-prompt.md        # /improve-prompt - Fix and enhance existing prompts
 │
 ├── prompts/            # Interactive setup helpers
-│   ├── setup-project.prompt    # Full project setup wizard
-│   ├── create-prd.prompt       # PRD creation helper
-│   └── create-command.prompt   # Custom command creator
+│   ├── bootstrap.prompt       # Full new project setup (copy-paste version)
+│   ├── convert-existing.prompt # Existing project conversion (copy-paste version)
+│   ├── setup-project.prompt   # Legacy project setup wizard
+│   ├── create-prd.prompt      # PRD creation helper
+│   └── create-command.prompt  # Custom command creator
 │
 ├── docs/               # Detailed guides
-│   └── statusline-guide.md     # Context status line setup and customization
+│   └── statusline-guide.md    # Context status line setup and customization
+│
 └── examples/           # Sample project setups
     ├── web-app-example/
     └── cli-tool-example/
@@ -159,12 +329,6 @@ The `starter-permissions.json` file contains a curated list of commands for Clau
 - **brew** - system package installation
 - **source** - shell script execution
 
-**To use it:** Copy to your project's `.claude/` folder as `settings.local.json`:
-
-```bash
-cp templates/starter-permissions.json /path/to/your/project/.claude/settings.local.json
-```
-
 > **Note:** Review the permissions before using. Remove any commands you'd prefer Claude to ask about first.
 
 ### Issue Tracking with Beads
@@ -191,9 +355,11 @@ The `/gogogo` and `/wrapup` slash commands automatically check and update beads 
 
 After setup, use these commands in Claude Code:
 
-**Setup (One-Time):**
+**Setup:**
 | Command | What it does |
 |---------|--------------|
+| `/bootstrap` | Sets up the starter kit for a new project |
+| `/convert` | Adds the starter kit to an existing project |
 | `/setup-statusline` | Configures the context usage status bar (run once) |
 
 **Session Management:**
@@ -320,13 +486,6 @@ You don't need to memorize this—the commands guide you through it conversation
 2. Claude asks targeted questions to fill in the gaps
 3. You get a complete, well-structured prompt ready to use
 
-**Example:**
-```
-/create-prompt help me write a prompt for code review
-```
-
-Claude will ask things like: "Who's the target audience—junior developers or the whole team? Should it focus on security, performance, or general quality?" Then it builds the complete prompt for you.
-
 ### `/create-research-prompt` — Build Deep Research Prompts
 
 **When to use it:** You need to research a topic thoroughly—competitive analysis, technical deep-dives, market research, etc.
@@ -335,13 +494,6 @@ Claude will ask things like: "Who's the target audience—junior developers or t
 - **Scope:** What time period? What sources? What depth?
 - **Exclusions:** What should be avoided? (outdated info, certain sources)
 - **Uncertainty handling:** How should the AI flag things it's not confident about?
-
-**Example:**
-```
-/create-research-prompt competitive analysis of AI coding assistants
-```
-
-Claude will ask about your research timeframe, preferred sources, what you already know (to avoid redundancy), and how you want findings organized.
 
 ### `/improve-prompt` — Fix Existing Prompts
 
@@ -352,22 +504,6 @@ Claude will ask about your research timeframe, preferred sources, what you alrea
 2. Describe what's going wrong
 3. Claude analyzes the issue and applies targeted fixes
 4. You get an improved version with explanations of what changed
-
-**Example:**
-```
-/improve-prompt
-```
-
-Then paste your broken prompt and say "it keeps giving me generic responses instead of specific recommendations." Claude will identify what's missing and fix it.
-
-### Context-Aware Intelligence
-
-These commands are smart about context. If you've been discussing a project, Claude already knows:
-- What you're building (from conversation or your `.claude/prd.md`)
-- Who your users are
-- What problems you're solving
-
-So instead of asking you 10 questions, it might say: "Based on our discussion about your developer tool, I'm assuming the audience is software engineers and the tone should be technical but approachable. Is that right?" Then it only asks about what it doesn't know.
 
 ---
 

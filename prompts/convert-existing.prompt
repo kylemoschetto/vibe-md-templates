@@ -1,0 +1,190 @@
+<!--
+SYNC NOTICE: If you modify this prompt, update the README.md section:
+- "Already Have a Claude Code Project?" must reference this file's behavior
+-->
+
+# Convert Existing Project to Claude Code Starter Kit
+
+You are adding the Claude Code Starter Kit to an existing project that already has some Claude Code configuration. Your job is to carefully merge the new templates without disrupting the user's existing setup.
+
+## CRITICAL: Enter Plan Mode First
+
+Before doing ANYTHING else, enter plan mode. This is essential for existing projects because we need to show the user exactly what will change.
+
+Your plan must include:
+- What already exists in their `.claude/` folder
+- What will be ADDED (files that don't exist yet)
+- What COULD be updated (files that exist but differ from templates)
+- How permissions will be merged (not replaced)
+
+Wait for user approval before proceeding.
+
+---
+
+## Step 1: Audit Existing Setup
+
+Check what already exists:
+
+### Check `.claude/` folder
+```bash
+ls -la .claude/ 2>/dev/null || echo "No .claude/ folder exists"
+```
+
+### Check for existing settings
+```bash
+cat .claude/settings.local.json 2>/dev/null || echo "No settings.local.json exists"
+```
+
+### Check for beads
+```bash
+ls -la .beads/ 2>/dev/null || echo "No .beads/ folder exists"
+```
+
+### Check for existing commands
+```bash
+ls -la .claude/commands/ 2>/dev/null || echo "No commands folder exists"
+```
+
+Document what you find in your plan.
+
+---
+
+## Step 2: Create Detailed Plan
+
+In your plan, categorize every file:
+
+### Files to ADD (don't exist yet)
+List each file from the starter kit that doesn't exist in the user's project.
+
+### Files that DIFFER (exist but are different)
+For each file that exists but differs from the template:
+- Note that it exists
+- Summarize the difference briefly
+- Mark it for user decision
+
+### Files that MATCH (exist and are identical)
+Note these as "already up to date."
+
+---
+
+## Step 3: Handle Each Existing File Carefully
+
+For each file that exists and differs from the template, ask the user explicitly:
+
+> "The file `.claude/[filename]` exists and differs from the starter kit template."
+>
+> Options:
+> 1. **Keep existing** - Don't change this file
+> 2. **Replace with template** - Overwrite with the starter kit version
+> 3. **Show me the diff** - I'll display both versions so you can decide
+
+Wait for their decision on each file before proceeding.
+
+---
+
+## Step 4: Merge Permissions Intelligently
+
+If `.claude/settings.local.json` exists:
+
+1. Read the existing permissions
+2. Read the starter permissions from `templates/starter-permissions.json`
+3. Create a merged version that:
+   - Keeps ALL existing user permissions (don't remove anything)
+   - Adds new permissions from the starter kit that the user doesn't have
+4. Show the user what will be added:
+
+> "Your existing permissions will be preserved. I'll add these new permissions from the starter kit:
+> - [list of new permissions being added]
+>
+> Is that okay?"
+
+If `.claude/settings.local.json` doesn't exist, just copy the starter permissions.
+
+---
+
+## Step 5: Add New Files
+
+For files that don't exist yet, simply copy them:
+
+### Missing template files → `.claude/`
+```bash
+cp templates/[missing-file].md .claude/
+```
+
+### Missing commands → `.claude/commands/`
+```bash
+mkdir -p .claude/commands
+cp commands/[missing-file].md .claude/commands/
+```
+
+---
+
+## Step 6: Initialize Beads (If Needed)
+
+If `.beads/` doesn't exist:
+
+> "You don't have beads set up yet. Would you like me to initialize it? Beads provides lightweight issue tracking that integrates with the `/gogogo` and `/wrapup` commands."
+
+If yes:
+```bash
+bd quickstart
+```
+
+If beads is not installed, inform the user they need to install it:
+```bash
+npm install -g beads-ts
+```
+
+---
+
+## Step 7: Walk Through Empty/Placeholder Content
+
+For any template files that were added (not kept from existing):
+
+1. Check if they contain placeholders (text like `[Your project name]` or `TODO`)
+2. Ask the user for the information needed to fill them in
+3. Update the files with real content
+
+Be efficient—if you can infer information from existing files (like a `package.json` or existing `prd.md`), use that and just confirm with the user.
+
+---
+
+## Step 8: Offer Status Line Setup
+
+Ask the user:
+
+> "Would you like to set up the context status line? This shows your token usage in real-time and is **highly recommended** by the template author—it significantly improves your Claude Code experience by helping you stay aware of context limits. It's also easy to remove later if you don't want it."
+
+If yes, run `/setup-statusline` or guide them through the setup.
+
+---
+
+## Completion Summary
+
+At the end, provide a clear summary:
+
+> "Conversion complete! Here's what changed:
+>
+> **Added:**
+> - [list of new files]
+>
+> **Updated:**
+> - [list of files that were replaced/merged]
+>
+> **Preserved:**
+> - [list of files that were kept as-is]
+>
+> You're ready to use the starter kit! Try:
+> - `/gogogo` to start a coding session
+> - `/wrapup` to end a session and commit changes
+> - `bd ready` to see issues ready to work on"
+
+---
+
+## Key Principles
+
+1. **Never silently overwrite** - Always show what will change and get approval
+2. **Preserve user customizations** - Their existing config takes priority
+3. **Merge, don't replace** - Especially for permissions
+4. **Be transparent** - Show diffs when asked
+5. **Minimize disruption** - Only change what's necessary
