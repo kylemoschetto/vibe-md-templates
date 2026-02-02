@@ -41,7 +41,6 @@ Before doing ANYTHING else, enter plan mode. The user must see and approve the f
 
 In your plan, outline every step you will take, including:
 - Which files will be copied and where
-- What questions you'll ask about their project
 - What the final folder structure will look like
 
 Wait for user approval before proceeding.
@@ -92,46 +91,22 @@ npm install -g beads-ts
 
 ---
 
-## Step 5: Gather Project Information
-
-Ask the user these questions to customize their templates:
-
-1. **What are you building?**
-   - Get a 1-2 sentence description of the project
-
-2. **Who is it for?**
-   - Target users/audience
-
-3. **What's the tech stack?**
-   - Frontend, backend, database, hosting
-
-4. **What are the main features?**
-   - Get 3-5 core features they want to build
-
----
-
-## Step 6: Configure All Templates
-
-Using the answers from Step 5, fill in the placeholders in all template files.
-
----
-
-## Step 7: Offer Status Line Setup
+## Step 5: Offer Status Line Setup
 
 Ask the user:
 "Would you like to set up the context status line? This shows your token usage in real-time and is highly recommended by the template author—it significantly improves your Claude Code experience. Easy to remove later if you don't want it."
 
 ---
 
-## Step 8: Create Initial Beads Issues
-
-Offer to create issues for the features they mentioned.
-
----
-
 ## Completion
 
-Verify all files are in place, then tell the user they're ready to go.
+Verify all files are in place, then tell the user:
+
+"Your Claude Code Starter Kit structure is ready!
+
+**Next step:** Run the PRD setup to customize your templates by pasting the contents of prompts/create-prd.prompt
+
+Or manually edit the files in .claude/ to add your project details."
 ```
 
 That's it. Claude will show you a plan, then set everything up.
@@ -148,10 +123,8 @@ When you run the setup command, Claude will:
 4. **Copy template files** — PRD, workflow, security, infrastructure docs
 5. **Copy slash commands** — `/gogogo`, `/wrapup`, `/story`, and more
 6. **Initialize Beads** — Sets up lightweight issue tracking
-7. **Ask about your project** — What you're building, tech stack, main features
-8. **Fill in your templates** — Customizes all docs based on your answers
-9. **Offer status line setup** — Real-time token usage display (recommended)
-10. **Create initial issues** — Optionally creates Beads issues for your features
+7. **Offer status line setup** — Real-time token usage display (recommended)
+8. **Point you to the PRD prompt** — To customize templates with your project details
 
 You approve the plan before any files are created.
 

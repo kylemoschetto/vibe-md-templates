@@ -14,7 +14,6 @@ Before doing ANYTHING else, enter plan mode. The user must see and approve the f
 
 In your plan, outline every step you will take, including:
 - Which files will be copied and where
-- What questions you'll ask about their project
 - What the final folder structure will look like
 
 Wait for user approval before proceeding.
@@ -80,56 +79,7 @@ npm install -g beads-ts
 
 ---
 
-## Step 5: Gather Project Information
-
-Ask the user these questions to customize their templates:
-
-1. **What are you building?**
-   - Get a 1-2 sentence description of the project
-   - Example: "A task management app for remote teams"
-
-2. **Who is it for?**
-   - Target users/audience
-   - Example: "Small development teams (5-20 people)"
-
-3. **What's the tech stack?**
-   - Frontend, backend, database, hosting
-   - Offer common defaults: "React + Node + PostgreSQL? Or something else?"
-
-4. **What are the main features?**
-   - Get 3-5 core features they want to build
-   - These will become beads issues
-
----
-
-## Step 6: Configure All Templates
-
-Using the answers from Step 5, fill in the placeholders in these files:
-
-### `.claude/prd.md`
-- Project name and description
-- Target users
-- Core features as user stories
-- MVP scope
-
-### `.claude/infra.md`
-- Tech stack details
-- Development environment
-- Deployment target (if known)
-
-### `.claude/workflow.md`
-- Should already be configured, but verify beads integration
-
-### `.claude/security.md`
-- Basic security requirements based on app type
-- If handling user data, note authentication needs
-
-### `.claude/sbom.md`
-- List the core dependencies from their tech stack
-
----
-
-## Step 7: Offer Status Line Setup
+## Step 5: Offer Status Line Setup
 
 Ask the user:
 
@@ -139,36 +89,26 @@ If yes, run `/setup-statusline` or guide them through the setup.
 
 ---
 
-## Step 8: Create Initial Beads Issues
+## Completion
 
-Offer to create issues for the features they mentioned:
-
-> "Would you like me to create beads issues for your main features? This helps track your work from the start."
-
-If yes, create issues like:
-```bash
-bd create "Feature name from their list" --type feature
-```
-
-Create one issue per major feature they mentioned.
-
----
-
-## Completion Checklist
-
-Before finishing, verify:
+Verify the setup:
 
 - [ ] `.claude/` folder exists with all template files
 - [ ] `.claude/commands/` folder exists with all command files
 - [ ] `.claude/settings.local.json` exists (starter permissions)
 - [ ] `.beads/` folder exists (from `bd quickstart`)
-- [ ] Templates have been customized with project info
-- [ ] User has been offered status line setup
 
 Then tell the user:
 
-> "Your Claude Code Starter Kit is ready! Here's what you can do next:
+> "Your Claude Code Starter Kit structure is ready!
+>
+> **Next step:** Run the PRD setup to customize your templates:
+> ```
+> Paste the contents of prompts/create-prd.prompt
+> ```
+> Or if you prefer, you can manually edit the files in `.claude/` to add your project details.
+>
+> Once your PRD is set up, you can:
 > - Run `/gogogo` to start a coding session
 > - Run `/story` to add more features to your PRD
-> - Run `bd ready` to see issues ready to work on
-> - Check `.claude/` to review your context files"
+> - Run `bd ready` to see issues ready to work on"
