@@ -18,6 +18,8 @@ curl -fsSL https://claude.ai/install.sh | bash
 
 # Beads (issue tracking)
 npm install -g beads-ts
+# You may want to try and install it with brew if you are on a mac device
+brew install steveyegge/beads/bd
 ```
 
 **Then clone this repo and run the setup:**
