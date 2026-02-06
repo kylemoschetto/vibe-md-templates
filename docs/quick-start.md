@@ -80,6 +80,8 @@ Claude Code will read your templates and build exactly what you need!
 
 - Read the [Template Guide](template-guide.md) for detailed explanations
 - Check out the `/examples/` folder for inspiration
+- Try `/scribe` for document creation and planning workflows
+- Try `/quartermaster` for technical architecture analysis
 - Start building your first feature!
 
 ## Need Help?

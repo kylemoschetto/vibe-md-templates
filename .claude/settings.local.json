@@ -2,7 +2,18 @@
   "permissions": {
     "allow": [
       "Bash(git clone:*)",
-      "Bash(bd:*)"
+      "Bash(bd:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh pr diff:*)",
+      "Bash(gh api:*)",
+      "Bash(ls:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(head:*)",
+      "Bash(git add:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr close:*)"
     ],
     "deny": [],
     "ask": []

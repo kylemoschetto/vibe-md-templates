@@ -501,3 +501,43 @@ Before ending a work session, complete ALL steps:
    - Leave branch open, push current state
    - Document progress in commit messages
 7. **Hand off** - provide context for next session
+
+---
+
+## 10. Agent-Assisted Workflows
+
+When working on complex tasks, suggest and use these agent systems to improve planning and execution quality. All agent workflows track work through beads.
+
+### When to Suggest Scribe (`/scribe`)
+
+Suggest `/scribe` when the user needs to:
+- **Set up a new project** → `/scribe setup` (populates templates, initializes beads)
+- **Draft requirements** → `/scribe draft PRD for [feature]` (creates OPORD + FRAGO beads issues)
+- **Create executive summaries** → `/scribe brief about [topic]` (two-page decision memos)
+- **Run a planning session** → `/scribe plan [topic]` (facilitates goals, constraints, next steps — all tracked as beads issues)
+
+### When to Suggest Quartermaster (`/quartermaster`)
+
+Suggest `/quartermaster` when the user needs to:
+- **Prioritize work** → `/quartermaster review backlog` (analyzes beads, recommends next items)
+- **Integrate a new feature** → `/quartermaster add [feature]` (architectural fit analysis)
+- **Assess code health** → `/quartermaster review tech` (gaps, tech debt, security concerns)
+- **Approve and execute plans** → `/quartermaster coordinate` (structured handoff to Scribe for beads creation)
+
+### Agent Coordination Flow
+
+1. Quartermaster analyzes and recommends (read-only on beads)
+2. When a plan is approved, Quartermaster coordinates with Scribe
+3. Scribe executes all beads operations (`bd create`, `bd update`, `bd close`, `bd dep add`)
+4. All work items are tracked as beads issues — no planning artifacts exist outside beads
+
+### Recognition Triggers
+
+Proactively suggest agents when you detect:
+- New data models or schema changes → `/quartermaster`
+- Cross-cutting concerns (auth, logging, caching) → `/quartermaster`
+- External API integrations → `/quartermaster`
+- Performance-sensitive operations → `/quartermaster`
+- New feature requests needing structured PRD → `/scribe`
+- Need for stakeholder communication → `/scribe brief`
+- Session planning with multiple work items → `/scribe plan`

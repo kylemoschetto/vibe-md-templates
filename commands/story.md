@@ -46,7 +46,7 @@ Keep it light, supportive, and collaborative.
 
 Each new story should follow this format:
 ```
-* **Story X:** As a [type of user], I want to [take an action] so that I can [achieve a goal].  
+* **Story X:** As a [type of user], I want to [take an action] so that I can [achieve a goal].
     * Feature name: `short_feature_name`
 ```
 
@@ -61,5 +61,17 @@ Each new story should follow this format:
    ```bash
    bd create "Implement <feature_name>" --type feature
    ```
+7. For complex features with architectural implications, suggest:
+   - "Would you like me to run `/quartermaster` to analyze the best way to integrate this feature?"
 
 Remember: You're updating the file directly—no manual copy-paste needed!
+
+## Quartermaster Integration
+
+For features that involve:
+- New data models or significant schema changes
+- Cross-cutting concerns (auth, validation, etc.)
+- External integrations
+- Performance-sensitive operations
+
+Suggest the user run `/quartermaster I would like to add [feature], what's the best way to fold this in` to get architectural guidance before implementation begins.

@@ -343,4 +343,23 @@ Prioritize:
 
 ---
 
+## Agent Integration
+
+The starter kit includes two agent systems (Scribe and Quartermaster) that read template files for context:
+
+- **Scribe** reads `prd.md`, `workflow.md`, and other context files when drafting documents or creating beads issues
+- **Quartermaster** reads `prd.md`, `infra.md`, `security.md`, and codebase files when analyzing feature fit or technical concerns
+
+Both agents respect the **Conflict Resolution Matrix** defined in `claude.md`. When agents make recommendations that touch on security or infrastructure constraints, they follow the same priority order:
+
+1. Security & Supply Chain (`security.md`, `sbom.md`)
+2. Runtime Environment (`infra.md`)
+3. Global Conventions (`claude.md`)
+4. Feature Requirements (`prd.md`)
+5. Process & Workflow (`workflow.md`)
+
+This means agent recommendations will flag conflicts with higher-priority constraints rather than silently overriding them.
+
+---
+
 **Remember:** Templates are living documents. They should evolve with your project and reflect your actual current state, not your ideal future state.

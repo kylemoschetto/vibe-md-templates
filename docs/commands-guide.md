@@ -194,3 +194,75 @@ All prompt engineering commands are **context-aware**:
 - They infer and confirm rather than asking everything from scratch
 
 This means if you've been discussing a feature and then run `/create-prompt`, Claude might say: "Based on our discussion about your authentication system, I'm assuming this prompt is for security-focused code review. Is that right?"
+
+---
+
+## Agent System Commands
+
+Agent commands provide access to dispatcher systems that route requests to specialized sub-agents. They're designed for complex, multi-step workflows that benefit from focused expertise.
+
+### `scribe.md` - Document Creation & Planning
+
+**Purpose:** Routes document creation and planning requests to the appropriate specialist sub-agent.
+
+**Sub-agents:**
+- **scribe-init** — Project setup: populates templates, initializes beads
+- **scribe-opord** — PRD/OPORD drafting: turns ideas into structured requirements + beads issues
+- **scribe-2page** — Executive briefs: crisp decision memos and summaries
+- **scribe-co-planning** — Planning facilitation: goals, constraints, sequenced next steps
+
+**Key behaviors:**
+- Scribe executes all beads backlog operations (create, update, close, dependencies)
+- All planning output flows into beads issues—no floating artifacts
+- Reads project templates for context before producing documents
+
+**Example usage:**
+
+```
+/scribe setup this repo using our templates and initialize beads
+/scribe draft a PRD for the payment processing feature
+/scribe write a two-page brief about the infrastructure migration
+/scribe run a planning session for Q2 roadmap
+```
+
+---
+
+### `quartermaster.md` - Technical Architecture & Backlog Analysis
+
+**Purpose:** Routes technical analysis requests to the appropriate specialist sub-agent.
+
+**Sub-agents:**
+- **quartermaster-backlog-review** — Analyzes beads, recommends prioritized next work
+- **quartermaster-feature-fit** — Evaluates how to integrate new features architecturally
+- **quartermaster-tech-review** — Identifies gaps, tech debt, security concerns
+- **quartermaster-coordination** — Produces structured handoffs to Scribe for beads creation
+
+**Key behaviors:**
+- Quartermaster is **READ-ONLY** on beads—analyzes and recommends only
+- All backlog modifications go through Scribe via coordination handoffs
+- Grounds recommendations in actual codebase exploration
+
+**Example usage:**
+
+```
+/quartermaster review the backlog and tell me what to work on next
+/quartermaster I want to add user notifications, what's the best way to integrate it?
+/quartermaster review the codebase for technical concerns
+/quartermaster the plan looks good, coordinate with scribe to create the issues
+```
+
+---
+
+### Agent Coordination Flow
+
+The agents work together in a structured flow:
+
+1. **Quartermaster analyzes** — Reviews backlog, evaluates feature fit, identifies technical concerns
+2. **User approves** — Reviews recommendations before any action
+3. **Quartermaster coordinates** — Produces a structured handoff document for Scribe
+4. **Scribe executes** — Creates beads issues, sets dependencies, updates backlog
+
+This separation ensures:
+- All recommendations get human approval before execution
+- Technical analysis is decoupled from backlog writes
+- Full audit trail of who recommended what and when

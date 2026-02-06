@@ -72,6 +72,7 @@ If it doesn't exist, just copy the starter permissions.
 Copy files that don't exist yet:
 - Missing template files → `.claude/`
 - Missing commands → `.claude/commands/`
+- Missing agent files → `agents/`, `agents/scribe/`, `agents/quartermaster/`
 
 ---
 
@@ -101,7 +102,12 @@ Provide a clear summary:
 - Files Updated
 - Files Preserved
 
-Then suggest: `/gogogo` to start, `/wrapup` to end sessions, `bd ready` for issues.
+Then suggest:
+- `/gogogo` to start sessions
+- `/wrapup` to end sessions
+- `/scribe` for document creation and planning
+- `/quartermaster` for technical architecture analysis
+- `bd ready` to see issues
 
 ---
 

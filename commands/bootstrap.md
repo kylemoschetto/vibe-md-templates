@@ -42,6 +42,18 @@ Create `.claude/commands/` and copy all files from `commands/`
 
 ---
 
+### Step 3b: Copy Agent Systems (Optional)
+
+If the user wants advanced agent workflows for document creation, planning, and technical architecture analysis:
+
+1. Create `agents/scribe/` and `agents/quartermaster/` directories in the project root
+2. Copy all files from `agents/` to the project (including subdirectories)
+3. Mention that `/scribe` and `/quartermaster` are now available for:
+   - Project setup and PRD drafting (`/scribe`)
+   - Backlog review and feature integration analysis (`/quartermaster`)
+
+---
+
 ### Step 4: Initialize Beads
 
 Run `bd quickstart` to set up issue tracking. If beads is not installed, tell the user to run `npm install -g beads-ts`
@@ -72,4 +84,6 @@ Verify all files are in place, then tell the user:
 > Once your PRD is set up, you can:
 > - Run `/gogogo` to start a session
 > - Run `/story` to add features
+> - Run `/scribe` for document creation and planning
+> - Run `/quartermaster` for technical architecture analysis
 > - Run `bd ready` to see issues"

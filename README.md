@@ -241,6 +241,20 @@ Everything below is detailed reference material. You don't need to read it to ge
 │   ├── changelog.md    # Version history
 │   └── starter-permissions.json  # Pre-approved commands for Claude Code
 │
+├── agents/             # Agent dispatchers and specialists
+│   ├── scribe.md                # Scribe dispatcher (document creation & planning)
+│   ├── scribe/                  # Scribe specialist sub-agents
+│   │   ├── scribe-init.md       # Project setup specialist
+│   │   ├── scribe-opord.md      # PRD/OPORD drafting specialist
+│   │   ├── scribe-2page.md      # Executive brief specialist
+│   │   └── scribe-co-planning.md # Planning facilitation specialist
+│   ├── quartermaster.md         # Quartermaster dispatcher (technical architecture)
+│   └── quartermaster/           # Quartermaster specialist sub-agents
+│       ├── quartermaster-backlog-review.md  # Backlog analysis
+│       ├── quartermaster-feature-fit.md     # Feature integration
+│       ├── quartermaster-tech-review.md     # Technical review
+│       └── quartermaster-coordination.md    # Scribe coordination
+│
 ├── commands/           # Slash commands for Claude Code
 │   ├── bootstrap.md             # /bootstrap - Set up new project
 │   ├── convert.md               # /convert - Add to existing project
@@ -248,6 +262,8 @@ Everything below is detailed reference material. You don't need to read it to ge
 │   ├── gogogo.md                # /gogogo - Start a work session
 │   ├── wrapup.md                # /wrapup - End session, commit, sync
 │   ├── story.md                 # /story - Create a new user story
+│   ├── scribe.md                # /scribe - Document creation & planning agent
+│   ├── quartermaster.md         # /quartermaster - Technical architecture agent
 │   ├── create-prompt.md         # /create-prompt - Build effective prompts
 │   ├── create-research-prompt.md # /create-research-prompt - Build deep research prompts
 │   └── improve-prompt.md        # /improve-prompt - Fix and enhance existing prompts
@@ -350,6 +366,75 @@ After setup, use these commands in Claude Code:
 | `/create-prompt` | Builds a comprehensive prompt from a basic idea |
 | `/create-research-prompt` | Builds a prompt optimized for deep research tasks |
 | `/improve-prompt` | Reviews and improves an existing prompt |
+
+**Agent Workflows:**
+| Command | What it does |
+|---------|--------------|
+| `/scribe` | Routes to document creation and planning specialists |
+| `/quartermaster` | Routes to technical architecture and backlog analysis specialists |
+
+---
+
+## Agent Systems
+
+The starter kit includes two agent dispatcher systems that extend slash commands with deeper capabilities for complex project work.
+
+### Scribe (`/scribe`)
+
+Document creation and planning agent. Routes to four specialists:
+
+- **scribe-init** — Project setup: populates templates, initializes beads
+- **scribe-opord** — PRD/OPORD drafting: turns ideas into structured requirements + beads issues
+- **scribe-2page** — Executive briefs: crisp decision memos and summaries
+- **scribe-co-planning** — Planning facilitation: goals, constraints, sequenced next steps
+
+**Scribe executes all beads backlog operations** (create, update, close, dependencies).
+
+**Example usage:**
+```
+/scribe setup this repo using our templates
+/scribe draft a PRD for user authentication
+/scribe write a two-page brief about the API redesign
+/scribe run a planning session for the v2 release
+```
+
+### Quartermaster (`/quartermaster`)
+
+Technical architecture and backlog analysis agent. Routes to four specialists:
+
+- **quartermaster-backlog-review** — Analyzes beads, recommends prioritized next work
+- **quartermaster-feature-fit** — Evaluates how to integrate new features architecturally
+- **quartermaster-tech-review** — Identifies gaps, tech debt, security concerns
+- **quartermaster-coordination** — Produces structured handoffs to Scribe for beads creation
+
+**Quartermaster is READ-ONLY on beads** — it analyzes and recommends, but all writes go through Scribe.
+
+**Example usage:**
+```
+/quartermaster review the backlog and tell me what to work on next
+/quartermaster I want to add caching, what's the best way to integrate it?
+/quartermaster review the codebase for technical concerns
+/quartermaster the plan looks good, coordinate with scribe to create the issues
+```
+
+### How They Work Together
+
+1. **Quartermaster analyzes** — Reviews backlog, evaluates features, identifies gaps
+2. **User approves** — Reviews recommendations before any action
+3. **Quartermaster coordinates** — Produces a structured handoff document
+4. **Scribe executes** — Creates beads issues, sets dependencies, updates backlog
+
+All work items are tracked in beads — no planning artifacts exist outside the issue tracker.
+
+### Setup
+
+To use agents, copy the `agents/` directory to your project root:
+
+```bash
+cp -r agents/ /path/to/your/project/agents/
+```
+
+The `/scribe` and `/quartermaster` commands are automatically available after copying `commands/scribe.md` and `commands/quartermaster.md` to `.claude/commands/`.
 
 ---
 
